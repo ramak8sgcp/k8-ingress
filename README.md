@@ -7,7 +7,7 @@ REGION_CODE=us-east-1 CLUSTER_NAME=expense ACC_ID=484907497033
 
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
-    --cluster expense \
+    --cluster expense-1 \
     --approve
 
 * IAM Policy
@@ -23,7 +23,7 @@ aws iam create-policy \
 * Provide access to EKS through IAM Policy
 
 eksctl create iamserviceaccount \
---cluster=expense \
+--cluster=expense-1 \
 --namespace=kube-system \
 --name=aws-load-balancer-controller \
 --attach-policy-arn=arn:aws:iam::484907497033:policy/AWSLoadBalancerControllerIAMPolicy \
@@ -38,4 +38,4 @@ helm repo add eks https://aws.github.io/eks-charts
 
 * Install AWS Load Balancer Controller
 
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=expense --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=expense-1 --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
